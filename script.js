@@ -1,4 +1,5 @@
 function cambiarTexto() {
     const parrafo = document.getElementById("parrafo");
-    parrafo.innerText = "¡Excelente! Los archivos separados funcionan a la perfección 🚀";
+    parrafo.textContent = "¡Lo logramos! Git, GitHub y JavaScript funcionando juntos.";
+    parrafo.style.color = "#ff5733";
 }
