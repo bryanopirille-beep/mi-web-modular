@@ -19,22 +19,36 @@
   <ul id="lista"></ul>
 
   <script>
+    let tareas = [];
+    function crearTareaEnPantalla(texto){
+      const li = document.createElement("li");
+      li.textContent= texto;
+
+      const btnEliminar= document.createElement("button");
+      btnEliminar.textContent = "Eliminar";
+      btnEliminar.onclick = function () {
+        li.remove();
+      };
+      li.appendChild(btnEliminar);
+      document.getElementById("lista").appendChild(li);
+    }
    function agregarTarea() {
   const input = document.getElementById("inputTarea");
   if (input.value === "") {
     alert("Escribí algo primero");
-      return;
+    return;
   }
-  const li = document.createElement("li");
-  li.textContent = input.value;
-  document.getElementById("lista").appendChild(li);
-  input.value ="";
-  const btnEliminar= document.createElement("button");
-  btnEliminar.textContent= "Eliminar";
-  btnEliminar.onclick= function() {
-    li.remove();
-  };
-  li.appendChild(btnEliminar)
+  tareas.push(input.value);
+  localStorage.setItem("misTareas", JSON.stringify(tareas));
+  crearTareaEnPantalla(input.value);
+  input.value = "";
+}
+const guardadas= localStorage.getItem("misTareas");
+if (guardadas !== null){
+  tareas = JSON.parse(guardadas);
+  tareas.forEach(function(texto) {
+    crearTareaEnPantalla(texto);
+  });
 }
 </script>
 </body>
