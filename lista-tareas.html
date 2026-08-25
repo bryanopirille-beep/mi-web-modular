@@ -20,15 +20,26 @@
 
   <script>
     let tareas = [];
-    function crearTareaEnPantalla(texto){
+    function crearTareaEnPantalla(tarea){
       const li = document.createElement("li");
-      li.textContent= texto;
+      
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = tarea.completada;
+      checkbox.onclick = function () {
+        tarea.completada = checkbox.checked;
+        localStorage.setItem ("misTareas", JSON.stringify(tareas));
+      };
+      const span = document.createElement("span");
+      span.textContent = tarea.texto;
 
-      const btnEliminar= document.createElement("button");
+      const btnEliminar = document.createElement("button");
       btnEliminar.textContent = "Eliminar";
-      btnEliminar.onclick = function () {
+      btnEliminar.onclick = function (){
         li.remove();
       };
+      li.appendChild(checkbox);
+      li.appendChild(span);
       li.appendChild(btnEliminar);
       document.getElementById("lista").appendChild(li);
     }
@@ -38,16 +49,16 @@
     alert("Escribí algo primero");
     return;
   }
-  tareas.push(input.value);
+  tareas.push({ texto: input.value, completada: false});
   localStorage.setItem("misTareas", JSON.stringify(tareas));
-  crearTareaEnPantalla(input.value);
+  crearTareaEnPantalla({ texto: input.value, completada: false});
   input.value = "";
 }
 const guardadas= localStorage.getItem("misTareas");
 if (guardadas !== null){
   tareas = JSON.parse(guardadas);
-  tareas.forEach(function(texto) {
-    crearTareaEnPantalla(texto);
+  tareas.forEach(function(tarea) {
+    crearTareaEnPantalla(tarea);
   });
 }
 </script>
