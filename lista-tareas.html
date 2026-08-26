@@ -17,7 +17,7 @@
   <input type="text" id="inputTarea" placeholder="Escribe una tarea...">
   <button onclick="agregarTarea()">Agregar</button>
   <ul id="lista"></ul>
-
+<button onclick="borrarCompletadas()">Borrar completadas</button>
   <script>
     let tareas = [];
     function crearTareaEnPantalla(tarea){
@@ -49,15 +49,28 @@
     alert("Escribí algo primero");
     return;
   }
-  tareas.push({ texto: input.value, completada: false});
-  localStorage.setItem("misTareas", JSON.stringify(tareas));
-  crearTareaEnPantalla({ texto: input.value, completada: false});
-  input.value = "";
+  const nuevaTarea = { texto: input.value, completada: false };
+tareas.push(nuevaTarea);
+localStorage.setItem("misTareas", JSON.stringify(tareas));
+crearTareaEnPantalla(nuevaTarea);
+input.value ="";
 }
-const guardadas= localStorage.getItem("misTareas");
-if (guardadas !== null){
+const guardadas = localStorage.getItem("misTareas");
+if (guardadas !== null) {
   tareas = JSON.parse(guardadas);
-  tareas.forEach(function(tarea) {
+  tareas.forEach(function (tarea) {
+    crearTareaEnPantalla(tarea);
+  });
+}
+
+function borrarCompletadas() {
+  tareas = tareas.filter(function (tarea) {
+    return tarea.completada === false;
+  });
+  
+  localStorage.setItem("misTareas", JSON.stringify(tareas));
+  document.getElementById("lista").innerHTML = "";
+  tareas.forEach(function (tarea) {
     crearTareaEnPantalla(tarea);
   });
 }
