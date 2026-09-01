@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Peliculas</title>
+    <style>
+    /* Fondo general gris oscuro tipo Gemini */
+    body { 
+      font-family: 'Segoe UI', sans-serif; 
+      background-color: #131314; 
+      color: #e3e3e3; 
+      text-align: center; 
+      padding-top: 50px; 
+    }
+
+    h1 { 
+      color: #e3e3e3; 
+    }
+
+    /* Input con estilo oscuro */
+    input[type="text"] { 
+      padding: 12px 16px; 
+      font-size: 16px; 
+      background-color: #1e1f20; 
+      border: 1px solid #444746; 
+      color: #e3e3e3; 
+      border-radius: 8px; 
+      width: 320px; 
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: #8ab4f8;
+    }
+
+    /* Botón moderno */
+    button { 
+      background-color: #8ab4f8; 
+      color: #202124; 
+      border: none; 
+      padding: 12px 24px; 
+      font-size: 16px; 
+      font-weight: 600;
+      border-radius: 8px; 
+      cursor: pointer; 
+      margin-left: 10px; 
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background-color: #aecbfa;
+    }
+    
+    /* Contenedor de resultados */
+    #contenedorPeliculas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1000px;
+      margin: 40px auto;
+    }
+
+    /* Tarjetas de películas en tono gris tarjeta */
+    .pelicula-card {
+      background: #1e1f20;
+      padding: 15px;
+      border-radius: 12px;
+      width: 200px;
+      border: 1px solid #333537;
+      text-align: left;
+      color: #e3e3e3;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    .pelicula-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .pelicula-card h3 {
+      font-size: 16px;
+      margin: 10px 0 5px 0;
+      color: #f1f3f4;
+    }
+
+    .pelicula-card p {
+      font-size: 14px;
+      color: #9aa0a6;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+    <h1>Buscador de Peliculas 🎬</h1>
+    <input type="text" id="inputPelicula" placeholder="Escribe una película (ej. Batman)...">
+    <button onclick="BuscarPeliculas()">Buscar</button>
+    <div id="contenedorPeliculas">
+    </div>
+    <script>
+       async function BuscarPeliculas() {
+            const query =document.getElementById("inputPelicula").value;
+            const contenedor = document.getElementById("contenedorPeliculas");
+
+            if (query ==="") {
+                alert("Escribe el nombre de una película primero");
+                return;
+            }
+            console.log("Buscando la película:", query);
+            contenedor.innerHTML = "<p>Buscando películas...</p>";
+            
+            const apiKey = "trilogy"; 
+            const url = `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}`;
+
+            try { 
+                const respuesta = await fetch(url);
+                const datos = await respuesta.json();
+
+                if (datos.Response === "True") {
+                    contenedor.innerHTML = ""; 
+
+                    datos.Search.forEach(pelicula => {
+                        const card = document.createElement("div");
+                        card.classList.add("pelicula-card");
+
+                         const posterImg = pelicula.Poster !== "N/A" ? pelicula.Poster : "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22300%22%20viewBox%3D%220%200%20200%20300%22%3E%3Crect%20width%3D%22200%22%20height%3D%22300%22%20fill%3D%22%23ddd%22%2F%3E%3C%2Fsvg%3E";                        card.innerHTML = `
+                        <img src="${posterImg}" alt="${pelicula.Title}">
+                        <h3>${pelicula.Title}</h3>
+                        <p>Año: ${pelicula.Year}</p>
+                        `;
+                        contenedor.appendChild(card);
+                    });
+                
+                } else {
+                    contenedor.innerHTML = `<p>No se encontraron películas con ese nombre.</p>`;
+                         }
+                    } catch (error) {
+                    console.error("Hubo un error al conectar con la API:", error);
+                    contenedor.innerHTML = `<p>Ocurrió un error al buscar. Revisa tu conexión.</p>`;
+                    }
+                }
+    </script>
+</body>
+</html>
