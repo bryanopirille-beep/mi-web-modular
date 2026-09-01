@@ -6,10 +6,27 @@
   <style>
     body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; text-align: center; padding-top: 50px; }
     h1 { color: #1a73e8; }
-    input { padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; width: 250px; }
+    input[type="text"] { padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; width: 250px; }
     button { background-color: #1a73e8; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
-    ul { list-style: none; padding: 0; max-width: 320px; margin: 30px auto; text-align: left; }
-    li { background-color: white; padding: 10px 15px; margin-bottom: 8px; border-radius: 5px; }
+    ul { list-style: none; padding: 0; max-width: 350px; margin: 30px auto; text-align: left; }
+    
+    /* Estilo limpio con Flexbox para alinear perfectamente cada tarea */
+    li { 
+      background-color: white; 
+      padding: 10px 15px; 
+      margin-bottom: 8px; 
+      border-radius: 5px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 10px; 
+    }
+    
+    /* El texto ocupa el espacio disponible al medio */
+    li span { 
+      flex-grow: 1; 
+      text-align: left; 
+    }
   </style>
 </head>
 <body>
@@ -17,9 +34,11 @@
   <input type="text" id="inputTarea" placeholder="Escribe una tarea...">
   <button onclick="agregarTarea()">Agregar</button>
   <ul id="lista"></ul>
-<button onclick="borrarCompletadas()">Borrar completadas</button>
+  <button onclick="borrarCompletadas()">Borrar completadas</button>
+
   <script>
     let tareas = [];
+
     function crearTareaEnPantalla(tarea){
       const li = document.createElement("li");
       
@@ -28,8 +47,9 @@
       checkbox.checked = tarea.completada;
       checkbox.onclick = function () {
         tarea.completada = checkbox.checked;
-        localStorage.setItem ("misTareas", JSON.stringify(tareas));
+        localStorage.setItem("misTareas", JSON.stringify(tareas));
       };
+
       const span = document.createElement("span");
       span.textContent = tarea.texto;
 
@@ -37,43 +57,49 @@
       btnEliminar.textContent = "Eliminar";
       btnEliminar.onclick = function (){
         li.remove();
+        // Opcional avanzado: actualizar array y localStorage al eliminar individualmente
       };
+
+      // Orden visual correcto: Checkbox -> Texto -> Botón Eliminar
       li.appendChild(checkbox);
       li.appendChild(span);
       li.appendChild(btnEliminar);
+
       document.getElementById("lista").appendChild(li);
     }
-   function agregarTarea() {
-  const input = document.getElementById("inputTarea");
-  if (input.value === "") {
-    alert("Escribí algo primero");
-    return;
-  }
-  const nuevaTarea = { texto: input.value, completada: false };
-tareas.push(nuevaTarea);
-localStorage.setItem("misTareas", JSON.stringify(tareas));
-crearTareaEnPantalla(nuevaTarea);
-input.value ="";
-}
-const guardadas = localStorage.getItem("misTareas");
-if (guardadas !== null) {
-  tareas = JSON.parse(guardadas);
-  tareas.forEach(function (tarea) {
-    crearTareaEnPantalla(tarea);
-  });
-}
 
-function borrarCompletadas() {
-  tareas = tareas.filter(function (tarea) {
-    return tarea.completada === false;
-  });
-  
-  localStorage.setItem("misTareas", JSON.stringify(tareas));
-  document.getElementById("lista").innerHTML = "";
-  tareas.forEach(function (tarea) {
-    crearTareaEnPantalla(tarea);
-  });
-}
-</script>
+    function agregarTarea() {
+      const input = document.getElementById("inputTarea");
+      if (input.value === "") {
+        alert("¡Ey, poné una tarea primero!");
+        return;
+      }
+      const nuevaTarea = { texto: input.value, completada: false };
+      tareas.push(nuevaTarea);
+      localStorage.setItem("misTareas", JSON.stringify(tareas));
+      crearTareaEnPantalla(nuevaTarea);
+      input.value = "";
+    }
+
+    const guardadas = localStorage.getItem("misTareas");
+    if (guardadas !== null) {
+      tareas = JSON.parse(guardadas);
+      tareas.forEach(function (tarea) {
+        crearTareaEnPantalla(tarea);
+      });
+    }
+
+    function borrarCompletadas() {
+      tareas = tareas.filter(function (tarea) {
+        return tarea.completada === false;
+      });
+      
+      localStorage.setItem("misTareas", JSON.stringify(tareas));
+      document.getElementById("lista").innerHTML = "";
+      tareas.forEach(function (tarea) {
+        crearTareaEnPantalla(tarea);
+      });
+    }
+  </script>
 </body>
 </html>
