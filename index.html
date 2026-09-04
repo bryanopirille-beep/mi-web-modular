@@ -3,17 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi proyecto modular</title>
-    <!-- Conectamos el archivo CSS externo -->
+    <title>Bryan Pirille | Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Iconos para las redes sociales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>¡Mi primer sitio web con Git y GitHub!</h1>
-    <p id="parrafo">Este texto cambiará usando un archivo externo de JavaScript.</p>
-    
-    <button onclick="cambiarTexto()">¡Haz clic aquí!</button>
 
-    <!-- Conectamos el archivo JS externo -->
-    <script src="script.js"></script>
+    <main class="portfolio-container">
+        <!-- Columna Izquierda: Tarjeta de Presentación (Hero) -->
+        <section class="hero-card">
+            <div class="hero-content">
+                <h1>Bryan Pirille</h1>
+                <p>Frontend developer en formación. Diseño interfaces desde la experiencia de usuario.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/bryanopirille-beep" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:tu-correo@example.com" title="Correo"><i class="fas fa-envelope"></i></a>
+                <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </section>
+
+        <!-- Columna Derecha: Lista vertical de proyectos -->
+        <section class="projects-list">
+            <a href="lista-tareas.html" class="project-card">
+                <div>
+                    <h3>Lista de tareas</h3>
+                    <span class="subtext">JavaScript & LocalStorage</span>
+                </div>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+
+            <a href="clima.html" class="project-card">
+                <div>
+                    <h3>App del clima</h3>
+                    <span class="subtext">Fetch & APIs encadenadas</span>
+                </div>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+
+            <a href="#" class="project-card">
+                <div>
+                    <h3>Red Movilidad</h3>
+                    <span class="subtext">Diseño UX/UI (Caso de estudio)</span>
+                </div>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </section>
+    </main>
+
 </body>
 </html>
