@@ -148,3 +148,257 @@ li span {
     flex-grow: 1;
     text-align: left;
 }
+/* --- Estilos específicos para el Auditor de Accesibilidad --- */
+/* --- Estilos unificados y centrados para el Auditor de Accesibilidad --- */
+.a11y-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: inherit;
+    color: #ffffff;
+}
+
+.header-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header-container h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.header-container p {
+    color: #a0a0a0;
+    margin-bottom: 15px;
+}
+
+.btn-volver {
+    display: inline-block;
+    color: #61afef;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.btn-volver:hover {
+    opacity: 0.8;
+}
+
+.main-container-a11y {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card-input, .card-results {
+    background-color: #21252b;
+    border: 1px solid #3e4451;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-input h2, .card-results h2 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    color: #abb2bf;
+}
+
+#html-input {
+    width: 100%;
+    background-color: #181a1f;
+    color: #ffffff;
+    border: 1px solid #4b5263;
+    border-radius: 8px;
+    padding: 14px;
+    font-family: monospace;
+    font-size: 14px;
+    resize: vertical;
+    margin-bottom: 16px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#html-input:focus {
+    border-color: #61afef;
+}
+
+.btn-primary {
+    background-color: #61afef;
+    color: #181a1f;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;       /* Un poco más compacto */
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-block;    /* Deja de ocupar todo el ancho */
+    width: auto;              /* Se adapta al texto */
+}
+
+.btn-primary:hover {
+    background-color: #528bff;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.score-box {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #181a1f;
+    border: 1px solid #3e4451;
+}
+
+.lista-errores {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista-errores li {
+    background-color: #181a1f;
+    border-left: 4px solid #e06c75;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #abb2bf;
+}
+
+.lista-errores li.exito {
+    border-left-color: #98c379;
+    color: #98c379;
+}
+/* --- Unificación para la Lista de Tareas --- */
+body {
+    background-color: #181a1f; /* Fondo general oscuro */
+    color: #ffffff;
+}
+
+/* Elementos de la lista de tareas en modo oscuro */
+#lista-tareas li, ul li {
+    background-color: #181a1f;
+    border: 1px solid #3e4451;
+    color: #abb2bf;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#inputTarea, #task-input {
+    background-color: #181a1f;
+    color: #ffffff;
+    border: 1px solid #4b5263;
+    border-radius: 8px;
+    padding: 10px;
+}
+/* --- Corrección de diseño para Lista de Tareas --- */
+#inputTarea {
+    background-color: #181a1f;
+    color: #ffffff;
+    border: 1px solid #4b5263;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#inputTarea:focus {
+    border-color: #61afef;
+}
+
+#lista li {
+    background-color: #181a1f;
+    border: 1px solid #3e4451;
+    color: #abb2bf;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#lista li span {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10px;
+} 
+/* --- Corrección para los elementos dinámicos de la lista de tareas --- */
+#lista li {
+    background-color: #181a1f !important;
+    color: #abb2bf !important;
+    border: 1px solid #3e4451;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* Estilo base de la app del clima */
+body.clima-app {
+    background-color: #181a1f;
+    color: #ffffff;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 40px;
+    transition: background 0.5s ease; /* Transición suave al cambiar */
+}
+
+/* Estado Soleado / Despejado (Cielo azul vibrante) */
+body.soleado {
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1622278647455-454031626f25?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Estado Lluvia / Precipitación (Tonos oscuros y lluviosos) */
+body.lluvia {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1519692933481-e162a57d6721?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Tarjeta contenedora translúcida para que resalte sobre el fondo */
+.weather-card {
+    background: rgba(33, 37, 43, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid #3e4451;
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.weather-card input {
+    background-color: #181a1f;
+    color: #fff;
+    border: 1px solid #4b5263;
+    padding: 10px 14px;
+    border-radius: 6px;
+    outline: none;
+    width: 60%;
+}
+
+.weather-card button {
+    background-color: #61afef;
+    color: #181a1f;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}

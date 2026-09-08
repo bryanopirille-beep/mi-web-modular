@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditor de Accesibilidad Web (A11y)</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+    <div class="a11y-wrapper">
+        <header class="header-container">
+            <h1>Auditor de Accesibilidad Web (A11y)</h1>
+            <p>Evalúa el código HTML de tu sitio en busca de errores de accesibilidad y buenas prácticas.</p>
+            <a href="index.html" class="btn-volver">← Volver al Menú</a>
+        </header>
+
+        <main class="main-container-a11y">
+            <section class="card-input">
+                <h2>Pega tu código HTML aquí</h2>
+                <textarea id="html-input" rows="10" placeholder="&lt;header&gt;...&lt;/header&gt;"></textarea>
+                <button id="btn-auditar" class="btn-primary">Ejecutar Auditoría</button>
+            </section>
+
+            <section class="card-results" id="resultados-container">
+                <h2>Resultados de la Auditoría</h2>
+                <div id="score-box" class="score-box">Puntuación: --/100</div>
+                <ul id="lista-errores" class="lista-errores">
+                    <!-- Los resultados aparecerán aquí dinámicamente -->
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="script-a11y.js"></script>
+</body>
+</html>

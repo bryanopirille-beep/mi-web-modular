@@ -1,41 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi lista de tareas</title>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; text-align: center; padding-top: 50px; }
-    h1 { color: #1a73e8; }
-    input[type="text"] { padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; width: 250px; }
-    button { background-color: #1a73e8; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
-    ul { list-style: none; padding: 0; max-width: 350px; margin: 30px auto; text-align: left; }
-    
-    /* Estilo limpio con Flexbox para alinear perfectamente cada tarea */
-    li { 
-      background-color: white; 
-      padding: 10px 15px; 
-      margin-bottom: 8px; 
-      border-radius: 5px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
-      gap: 10px; 
-    }
-    
-    /* El texto ocupa el espacio disponible al medio */
-    li span { 
-      flex-grow: 1; 
-      text-align: left; 
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Mi lista de tareas</title>
+    <style>
+        /* 1. Cambiamos el fondo de la página a oscuro y ponemos el texto blanco */
+        body {
+    background-color: #181a1f !important;
+    color: #ffffff !important;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 40px;
+}
+
+h1 {
+    color: #ffffff !important;
+}
+
+#inputTarea {
+    background-color: #21252b !important;
+    color: #ffffff !important;
+    border: 1px solid #3e4451 !important;
+    padding: 10px;
+    border-radius: 6px;
+    outline: none;
+}
+
+/* Botón Agregar (Azul profesional) */
+.btn-agregar {
+    background-color: #61afef !important;
+    color: #181a1f !important;
+    border: none !important;
+    padding: 10px 16px !important;
+    border-radius: 6px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+}
+
+#lista {
+    list-style: none;
+    padding: 0;
+    max-width: 450px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+#lista li {
+    background-color: #21252b !important;
+    color: #abb2bf !important;
+    border: 1px solid #3e4451 !important;
+    padding: 10px 14px !important;
+    margin-bottom: 8px !important;
+    border-radius: 6px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Botones Eliminar de cada tarea (Rojo sutil) */
+#lista li button {
+    background-color: #e06c75 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 6px 12px !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+
+/* Botón Borrar completadas (Gris pizarra) */
+.btn-borrar-completadas {
+    background-color: #3e4451 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 16px !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+    </style>
 </head>
 <body>
   <h1>Mi lista de tareas</h1>
-  <input type="text" id="inputTarea" placeholder="Escribe una tarea...">
-  <button onclick="agregarTarea()">Agregar</button>
-  <ul id="lista"></ul>
-  <button onclick="borrarCompletadas()">Borrar completadas</button>
+  <!-- Input y botón agregar -->
+<input type="text" id="inputTarea" placeholder="Escribe una tarea...">
+<button onclick="agregarTarea()" class="btn-agregar">Agregar</button>
 
+<ul id="lista"></ul>
+
+<!-- Botón borrar -->
+<button onclick="borrarCompletadas()" class="btn-borrar-completadas">Borrar completadas</button>
   <script>
     let tareas = [];
 

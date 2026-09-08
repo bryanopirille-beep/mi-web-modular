@@ -3,32 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clima</title>
+    <title>Buscador de Clima</title>
+    <style>
+        /* Fondo general por defecto */
+        body {
+            background-color: #121418;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            transition: background 0.8s ease-in-out;
+        }
+
+        /* Gradientes dinámicos para el fondo general según el clima */
+        body.soleado {
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #f2994a);
+        }
+
+        body.lluvia {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+
+        body.nublado {
+            background: linear-gradient(135deg, #232526, #414345);
+        }
+
+        /* Tarjeta central elegante */
+        .weather-card {
+            background: rgba(33, 37, 43, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid #3e4451;
+            width: 100%;
+            max-width: 420px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"] {
+            background-color: #181a1f;
+            color: #fff;
+            border: 1px solid #4b5263;
+            padding: 12px 16px;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+            flex-grow: 1;
+        }
+
+        input[type="text"]:focus {
+            border-color: #61afef;
+        }
+
+        button {
+            background-color: #61afef;
+            color: #181a1f;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #resultado {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #abb2bf;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
+        .btn-volver {
+            display: inline-block;
+            margin-top: 25px;
+            color: #61afef;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-volver:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Buscador de clima</h1>
-    <input type="text" id="inputCiudad" placeholder= "San ignacio Mns">
-    <button onclick="buscarClima()">Buscar</button>
-    <div id="resultado"></div>
+
+    <div class="weather-card">
+        <h1>Buscador de Clima</h1>
+        
+        <div class="input-group">
+            <input type="text" id="inputCiudad" placeholder="Ej: Buenos Aires, Asunción...">
+            <button onclick="buscarClima()">Buscar</button>
+        </div>
+
+        <div id="resultado"></div>
+
+        <div>
+            <a href="index.html" class="btn-volver">← Volver al Menú</a>
+        </div>
+    </div>
+
     <script>
         function buscarClima() {
-            const ciudad = document.getElementById("inputCiudad").value;
-           fetch("https://geocoding-api.open-meteo.com/v1/search?name=" + ciudad)
-           .then(function (respuesta) {
-            return respuesta.json();
-           })
-           .then(function(datos) {
-             const lat = datos.results[0].latitude;
-             const lon = datos.results[0].longitude;
-             fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current_weather=true")
-  .then(function (respuesta2) {
-    return respuesta2.json();
-  })
-  .then(function (clima) {
-    const temp = clima.current_weather.temperature;
-    document.getElementById("resultado").textContent = "Temperatura en " + ciudad + ": " + temp + "°C";
-  });
-           });
+            const ciudad = document.getElementById("inputCiudad").value.trim();
+            const resultadoDiv = document.getElementById("resultado");
+            
+            if (!ciudad) {
+                resultadoDiv.textContent = "Por favor ingresa una ciudad.";
+                return;
+            }
+
+            resultadoDiv.textContent = "Buscando...";
+
+            fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(ciudad)}`)
+                .then(res => res.json())
+                .then(datos => {
+                    if (!datos.results || datos.results.length === 0) {
+                        throw new Error("Ciudad no encontrada");
+                    }
+
+                    const lat = datos.results[0].latitude;
+                    const lon = datos.results[0].longitude;
+                    const nombreCiudad = datos.results[0].name;
+
+                    return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+                        .then(res => res.json())
+                        .then(clima => ({ clima, nombreCiudad }));
+                })
+                .then(({ clima, nombreCiudad }) => {
+                    const temp = clima.current_weather.temperature;
+                    const codigoClima = clima.current_weather.weathercode;
+                    
+                    let descripcionClima = "Despejado";
+                    let claseFondo = "soleado";
+
+                    if (codigoClima === 0 || codigoClima === 1) {
+                        descripcionClima = "Soleado / Despejado ☀️";
+                        claseFondo = "soleado";
+                    } else if (codigoClima >= 2 && codigoClima <= 3) {
+                        descripcionClima = "Parcialmente Nublado ⛅";
+                        claseFondo = "nublado";
+                    } else if ((codigoClima >= 51 && codigoClima <= 67) || (codigoClima >= 80 && codigoClima <= 99)) {
+                        descripcionClima = "Lluvioso 🌧️";
+                        claseFondo = "lluvia";
+                    } else {
+                        descripcionClima = "Nublado / Neblina ☁️";
+                        claseFondo = "nublado";
+                    }
+
+                    resultadoDiv.innerHTML = `<strong>${nombreCiudad}</strong><br>${temp}°C - ${descripcionClima}`;
+
+                    // Cambia el fondo general de la página de forma fluida según el clima
+                    document.body.className = claseFondo;
+                })
+                .catch(error => {
+                    resultadoDiv.textContent = "No se pudo obtener el clima.";
+                });
         }
     </script>
 </body>
